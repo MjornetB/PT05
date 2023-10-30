@@ -1,0 +1,161 @@
+/* Marc Jornet Boeira */
+* {
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body {
+	background: #e9e9e9;
+	color: #2e2e2e;
+	font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.contenidor {
+	width: 90%;
+	max-width: 1000px;
+	margin: auto; 
+}
+
+h1 {
+	margin: 20px 0;
+	text-align: center;
+	font-family: 'Open Sans Condensed', sans-serif;
+	color: #1b4a81;
+	font-weight: black;
+}
+
+.contenidor .articles {
+	margin-bottom: 20px;
+}
+
+.contenidor .articles ul {
+	list-style: none;
+}
+
+.contenidor .articles ul li {
+	padding:15px 10px;
+	border-bottom: 1px solid #c8c8c8;
+}
+
+.paginacio ul {
+	list-style: none;
+}
+
+.paginacio ul li {
+	display: inline-block;
+	margin-right: 10px; 
+}
+
+.paginacio ul .active a {
+	background: #2580b4;
+}
+
+.paginacio ul .disabled {
+	background: #c2bfbf;
+	display: inline-block;
+	font-family: 'Open Sans Condensed', sans-serif;
+	padding: 2px 2px;
+	cursor:not-allowed;
+	color:#fff;
+	text-decoration: none;
+}
+
+.paginacio ul li a {
+	display: inline-block;
+	font-family: 'Open Sans Condensed', sans-serif;
+	padding: 10px 20px;
+	background: #424242;
+	color:#fff;
+	text-decoration: none;
+}
+
+.paginacio ul li a:hover {
+	text-decoration: none;
+	background: #399228;
+}
+
+
+/* part login */
+* {box-sizing: border-box;}
+
+/* Style the navbar */
+.topnav {
+  overflow: hidden;
+  background-color: #e9e9e9;
+}
+
+/* Navbar links */
+.topnav a {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Navbar links on mouse-over */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Active/current link */
+.topnav a.active {
+  background-color: #2196F3;
+  color: white;
+}
+
+/* Style the input container */
+.topnav .login-container {
+  float: right;
+}
+
+/* Style the input field inside the navbar */
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+  width: 150px; /* adjust as needed (as long as it doesn't break the topnav) */
+}
+
+
+/* Style the button inside the input container */
+.topnav .login-container button {
+  float: right;
+  padding: 6px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.topnav .login-container button:hover {
+  background: #ccc;
+}
+
+/* Add responsiveness - On small screens, display the navbar vertically instead of horizontally */
+@media screen and (max-width: 600px) {
+  .topnav .login-container {
+    float: none;
+  }
+  .topnav a, .topnav input[type=text], .topnav .login-container button {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+  }
+  .topnav input[type=text] {
+    border: 1px solid #ccc;
+  }
+}
