@@ -62,6 +62,23 @@ function realitzarLogin($conn, $emailToLogin, $passwordToLogin){
   }
 }
 
+function comprovaExistencia($conn, $emailToRecovery){
+  try {
+      $stmt = $conn->prepare("SELECT * FROM usuaris WHERE email = :email");
+      $stmt->bindParam(':email', $emailToRecovery);
+      $stmt->execute();
+      $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
+      
+      if ($resultat !== false) { // Si hi han resultats  
+            return "Correcto";
+      } else {
+          return "Usuario no encontrado";
+      }
+  } catch (PDOException $e) {
+      return "Error al realizar el login: " . $e->getMessage();
+  }
+}
+
 /**
  * mostrarArticulosUsersBBDD - Funció que mostra els articles de l'usuari que esta logejat a la web
  *
@@ -71,11 +88,11 @@ function realitzarLogin($conn, $emailToLogin, $passwordToLogin){
  * @param  mixed $usuariLogat Nom de l'usuari que esta logejat
  */
 function mostrarArticulosUsersBBDD($conn, $articulosPorPagina, $offset, $usuariLogat){
-  $stmtTemp = $conn->prepare("SELECT id FROM usuaris WHERE email = :email");
-  $stmtTemp->bindParam(':email', $usuariLogat);
-  $stmtTemp->execute();
-  $resultatTemp = $stmtTemp->fetch(PDO::FETCH_ASSOC);
-  $_SESSION['idUser'] = $resultatTemp["id"];
+ // $stmtTemp = $conn->prepare("SELECT id FROM usuaris WHERE email = :email");
+ // $stmtTemp->bindParam(':email', $usuariLogat);
+ // $stmtTemp->execute();
+  //$resultatTemp = $stmtTemp->fetch(PDO::FETCH_ASSOC);
+  $_SESSION['idUser'] = getUserId($conn, $usuariLogat);//$resultatTemp["id"];
   $idUser = $_SESSION['idUser'];
 
   $stmt = $conn->prepare("SELECT * FROM articles WHERE id_usuaris = :idUser LIMIT :offset, :articulosPorPagina");
@@ -93,7 +110,15 @@ function mostrarArticulosUsersBBDD($conn, $articulosPorPagina, $offset, $usuariL
   
   echo '</ul>';
 }
+function getUserId($conn, $email){
+  $stmtTemp = $conn->prepare("SELECT id FROM usuaris WHERE email = :email");
+  $stmtTemp->bindParam(':email', $email);
+  $stmtTemp->execute();
+  $resultat = $stmtTemp->fetch(PDO::FETCH_ASSOC);
 
+
+  return $resultat["id"];
+}
 
 
 /**

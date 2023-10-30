@@ -2,6 +2,13 @@
 require "../env.php";
 // Marc Jornet Boeira
 // condicional que serveix per establir quants articles es mostraran per pagina, si no hi ha cap seleccio es mostraran 5 articles per pagina.
+
+if (isset($_SESSION['user'])) {
+  header("Location: webLogada.php");
+  exit; 
+}
+
+
 if (isset($_GET['seleccionArticulos'])) {
   $articulosPorPagina = $_GET['seleccionArticulos'];
   setcookie('articulosPorPagina', $articulosPorPagina); 

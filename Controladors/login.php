@@ -3,9 +3,15 @@
 require_once "../env.php";
 require_once "../mainFunctions.php";
 
+if (isset($_SESSION['user'])) {
+    header("Location: webLogada.php");
+    exit; 
+}
+
 $emailToLogin = "";
 $passwordToLogin = "";
 $errores = array();
+
 
 if (isset($_POST['submit'])) {
 $emailToLogin = $_POST["email"];

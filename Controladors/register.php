@@ -3,6 +3,11 @@
 require_once "../env.php";
 require_once "../mainFunctions.php";
 
+if (isset($_SESSION['user'])) {
+    header("Location: webLogada.php");
+    exit; 
+}
+
 $name = "";
 $email = "";
 $password = "";
