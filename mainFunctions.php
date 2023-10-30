@@ -41,10 +41,10 @@ function registerUserBBDD($conn, $name, $email, $password){
  * @param  mixed $passwordToLogin Contrasenya de l'usuari que vol fer login
  * @retorna string Retorna un string amb el resultat del login
  */
-function realitzarLogin($conn, $nameToLogin, $passwordToLogin){
+function realitzarLogin($conn, $emailToLogin, $passwordToLogin){
   try {
-      $stmt = $conn->prepare("SELECT contrasenya FROM usuaris WHERE nom = :nom");
-      $stmt->bindParam(':nom', $nameToLogin);
+      $stmt = $conn->prepare("SELECT contrasenya FROM usuaris WHERE email = :email");
+      $stmt->bindParam(':email', $emailToLogin);
       $stmt->execute();
       $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
       
@@ -52,7 +52,7 @@ function realitzarLogin($conn, $nameToLogin, $passwordToLogin){
           if (password_verify($passwordToLogin, $resultat['contrasenya'])) {
               return "Correcto";
           } else {
-              return "Login incorrecto";
+              return "Contraseña erronea";
           }
       } else {
           return "Usuario no encontrado";
@@ -71,8 +71,8 @@ function realitzarLogin($conn, $nameToLogin, $passwordToLogin){
  * @param  mixed $usuariLogat Nom de l'usuari que esta logejat
  */
 function mostrarArticulosUsersBBDD($conn, $articulosPorPagina, $offset, $usuariLogat){
-  $stmtTemp = $conn->prepare("SELECT id FROM usuaris WHERE nom = :nom");
-  $stmtTemp->bindParam(':nom', $usuariLogat);
+  $stmtTemp = $conn->prepare("SELECT id FROM usuaris WHERE email = :email");
+  $stmtTemp->bindParam(':email', $usuariLogat);
   $stmtTemp->execute();
   $resultatTemp = $stmtTemp->fetch(PDO::FETCH_ASSOC);
   $_SESSION['idUser'] = $resultatTemp["id"];

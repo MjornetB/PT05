@@ -20,10 +20,7 @@
 		<a href="../Controladors/register.php">Registro</a>
 		<div class="login-container">
 			<form action="../Controladors/login.php" method="POST">
-				<input type="text" placeholder="Usuario" name="username">
-				<input type="password" placeholder="Contraseña" name="psw">
 				<button type="submit">Login</button>
-			</form>
 		</div>
 	</div>
 
