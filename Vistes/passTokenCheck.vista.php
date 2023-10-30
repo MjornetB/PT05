@@ -26,8 +26,12 @@
             </div>
 
             <div class="form-group">
-                <label>Introduzca su email: </label>
-                <input type="text" class="form-control mb-4" placeholder="email" name="email" value="<?php if(isset($_POST['email']) && !empty($errores)){echo ($_POST['email']);} ?>">
+                <label>Introduzca una contraseña segura: </label>
+                <input type="password" class="form-control mb-4" placeholder="Pass" name="password">
+            </div>
+            <div class="form-group">
+                <label>Repita su contraseña: </label>
+                <input type="password" class="form-control mb-4" placeholder="Pass" name="password2">
             </div>
             <input type="submit" name="submit" value="Recupere su usuario"></input>
             <span>

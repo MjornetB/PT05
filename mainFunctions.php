@@ -120,6 +120,20 @@ function getUserId($conn, $email){
   return $resultat["id"];
 }
 
+function introduirToken($conn, $userId, $token){
+  $stmt = $conn->prepare("UPDATE usuaris SET reset_token = ?, time_token = NOW() WHERE id = ?");
+  $stmt->bindParam(1, $token);
+  $stmt->bindParam(2, $userId);
+  $stmt->execute();
+}
+
+function changePassBBDD($conn, $id, $password){
+    $stmt = $conn->prepare("UPDATE usuaris SET contrasenya = ? WHERE id = ?");
+    $stmt->bindParam(1, $password);
+    $stmt->bindParam(2, $id);
+    $stmt->execute();
+    return "Contraseña cambiada correctamente";
+}
 
 /**
  * crearArticle - Funció que crea un article a la base de dades

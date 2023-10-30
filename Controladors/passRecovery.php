@@ -32,6 +32,7 @@ if ($checkUserExists == "Correcto"){
     $mail = new PHPMailer(true);
 
 try {
+    $emailAEnviar = "";
     //Server settings
     $mail->SMTPDebug = 0;                  
     $mail->isSMTP();                                           
@@ -50,10 +51,15 @@ try {
     $mail->Body    = $token;
 
     $mail->send();
+    $successMessage = "El email se ha enviado correctamente!";
     
 } catch (Exception $e) {
-    //echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    $errores[] = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
+if ($successMessage){
+    introduirToken($conn, $userId, $token);
+}
+
 }
 //Si el login no es correcte, es mostra un missatge d'error i es redirigeix a la pagina index.php als 2 segons
 else {
