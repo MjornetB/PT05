@@ -17,7 +17,7 @@
     <div class="container">
 
         <!-- Formulari de registre -->
-        <form action="../Controladors/passRecovery.php" method="post" id="form">
+        <form action="../Controladors/passTokenCheck.php" method="post" id="form">
             <div class="mt-5 mb-5 flex-column text-center">
                 <div class="mx-auto d-block">
                     <h3>Articulos</h3>

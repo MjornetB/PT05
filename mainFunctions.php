@@ -127,12 +127,27 @@ function introduirToken($conn, $userId, $token){
   $stmt->execute();
 }
 
-function changePassBBDD($conn, $id, $password){
-    $stmt = $conn->prepare("UPDATE usuaris SET contrasenya = ? WHERE id = ?");
-    $stmt->bindParam(1, $password);
-    $stmt->bindParam(2, $id);
-    $stmt->execute();
-    return "Contraseña cambiada correctamente";
+
+function changePass2BBDD($conn, $id, $password, $token){
+  try {
+    $stmtemp = $conn->prepare("SELECT * FROM usuaris WHERE id = :id");
+    $stmtemp->bindParam(':id', $id);
+    $stmtemp->execute();
+    $resultat = $stmtemp->fetch(PDO::FETCH_ASSOC);
+    
+
+        if ($resultat['reset_token'] == $token  && $resultat['time_token'] > date("Y-m-d H:i:s", strtotime('-1 hour'))) {
+          $stmt = $conn->prepare("UPDATE usuaris SET contrasenya = ? WHERE id = ?");
+          $stmt->bindParam(1, $password);
+          $stmt->bindParam(2, $id);
+          $stmt->execute();
+          return "Contraseña cambiada correctamente";
+        } else {
+            return "Token incorrecto o caducado, vuelva a solicitar el cambio de contraseña";
+        }
+} catch (PDOException $e) {
+    return "Error al realizar el login: " . $e->getMessage();
+}
 }
 
 /**

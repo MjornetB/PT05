@@ -48,7 +48,7 @@ try {
     $mail->addAddress($emailToRecovery);    
     $mail->isHTML(true);
     $mail->Subject = 'Formulari PHP';
-    $mail->Body    = $token;
+    $mail->Body    = "http://localhost/BackEnd/Practiques/UF2/Pr%c3%a0ctiques/PT05/Controladors/passTokenCheck.php?id=" . $userId . "&token=" . $token ;
 
     $mail->send();
     $successMessage = "El email se ha enviado correctamente!";
