@@ -55,7 +55,7 @@ function realitzarLogin($conn, $emailToLogin, $passwordToLogin){
               return "Contraseña erronea";
           }
       } else {
-          return "Usuario no encontrado";
+          return "Introduzca un usuario valido";
       }
   } catch (PDOException $e) {
       return "Error al realizar el login: " . $e->getMessage();
@@ -136,7 +136,7 @@ function changePass2BBDD($conn, $id, $password, $token){
     $resultat = $stmtemp->fetch(PDO::FETCH_ASSOC);
     
 
-        if ($resultat['reset_token'] == $token  && $resultat['time_token'] > date("Y-m-d H:i:s", strtotime('-1 hour'))) {
+        if ($resultat['reset_token'] == $token  && strtotime($resultat['time_token']) > strtotime('-1 hour')) {
           $stmt = $conn->prepare("UPDATE usuaris SET contrasenya = ? WHERE id = ?");
           $stmt->bindParam(1, $password);
           $stmt->bindParam(2, $id);

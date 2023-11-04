@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Identifícate</title>
     <link rel="stylesheet" href="../Estils/estil_register.css">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <!-- Barra per tornar al home -->
 <body>
@@ -33,6 +34,12 @@
                 <label>Introduzca su contraseña: </label>
                 <input type="password" class="form-control mb-4" placeholder="Pass" name="password">
             </div>
+            <?php
+            if (isset($_COOKIE["error"]) && $_COOKIE["error"] >= 2) { // aixo permet que el recaptcha nomes surti quan hi ha 3 o mes errors(el 0 també compta com a error)
+                echo "<label>Introduzca el captcha: </label>";
+                echo '<div class="g-recaptcha" data-sitekey="6LckjvEoAAAAAPUlYVJeGZ_1pc17hag3GoDfgDnQ"></div>';
+            }
+            ?>
             <input type="submit" name="submit" value="Login"></input>
             <span>
                 <?php
