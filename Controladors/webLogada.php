@@ -6,9 +6,11 @@ require_once "../mainFunctions.php";
 if (session_status() == PHP_SESSION_NONE) {
 	session_start();
 }
+/*
 if (!isset($_SESSION['user'])) {
 	header("Location: logout.php");
 }
+*/
 // condicional que serveix per establir quants articles es mostraran per pagina, si no hi ha cap seleccio es mostraran 5 articles per pagina.
 if (isset($_GET['seleccionArticulos'])) {
   $articulosPorPagina = $_GET['seleccionArticulos'];

@@ -237,7 +237,14 @@ function test_input($data) {
     $data = htmlspecialchars($data);
     return $data;
   }
-  
+  //Funció que inserta un usuari autentificat amb Oauth a la base de dades
+  function insertUserOauth($conn, $email, $name, $socialMedia){
+      $stmt = $conn->prepare("INSERT INTO usuaris (nom_provisional_oauth, email, social_provider) VALUES (:nom, :email, :socialMedia)");
+      $stmt->bindParam(':nom', $name);
+      $stmt->bindParam(':email', $email);
+      $stmt->bindParam(':socialMedia', $socialMedia);
+      $stmt->execute();
+  }
   /**
    * existeixArticle - Funció que comprova si un article existeix a la base de dades
    *

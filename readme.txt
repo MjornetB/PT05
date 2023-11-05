@@ -14,3 +14,40 @@ d'operació realitzada o d'error en cas d'error. Per lo tant he decidit no fer a
 I amb el login, si falla vaig al login.php que no existeix com a vista, per aixo he posat un temporitzador, que en cas de fallar, mostri el perque del fallo i als 2 segons torni al index(pagina principal modo anonimo)
 
 */
+
+350990552000-70q1d43lfs7r14gpv64sn7367qugpt01.apps.googleusercontent.com id cliente
+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 secreto cliente
+
+<?php
+require_once 'vendor/autoload.php';
+
+session_start();
+
+$client = new Google_Client();
+$client->setClientId('350990552000-70q1d43lfs7r14gpv64sn7367qugpt01.apps.googleusercontent.com');
+$client->setClientSecret('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');
+$client->setRedirectUri('http://your-redirect-uri');
+$client->addScope(Google_Service_Drive::DRIVE);
+
+if (isset($_GET['code'])) {
+    $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+    $_SESSION['access_token'] = $token;
+} 
+
+if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+    $client->setAccessToken($_SESSION['access_token']);
+    // Ahora puedes hacer solicitudes a la API de Google en nombre del usuario
+} else {
+    // Redirige al usuario a la página de autenticación de Google
+    $authUrl = $client->createAuthUrl();
+    header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
+}
+?>
+
+
+
+
+
+1015525338167-71pp6vbvlv93gi3oje7l6ld4h8c78ogq.apps.googleusercontent.com
+
+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
