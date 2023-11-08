@@ -63,6 +63,10 @@
         <?php require_once "../Controladors/googleLogin.php"; ?>
         <a href="<?php echo $authUrl ?>">Inicie sesión con Google</a>
     </div>
+    <div class="container">
+        <img src="../Imatges/twitter.svg">
+        <a href="../Controladors/githubLogin.php">Inicie sesión con Github</a>
+    </div>
 </body>
 
 </html>

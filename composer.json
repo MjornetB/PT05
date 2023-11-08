@@ -1,6 +1,7 @@
 {
     "require": {
         "league/oauth2-client": "^2.7",
-        "league/oauth2-google": "^4.0"
+        "league/oauth2-google": "^4.0",
+        "hybridauth/hybridauth" : "~3.0"
     }
 }

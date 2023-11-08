@@ -51,3 +51,14 @@ if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
 1015525338167-71pp6vbvlv93gi3oje7l6ld4h8c78ogq.apps.googleusercontent.com
 
 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
+
+
+
+804247737721420   identificador facebook
+
+f4d0d44fb4009d35005fc2a4bb7dc0ac clave secreta facebook 
+
+
+Q7slkYOU6jfd3om5SVIE9vPIX
+
+vQJo1DjzmP5NdDFaXaxyLSihVYC2uZkmSwUYjgu3iBOCAITLZS
