@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-10-2023 a las 17:15:45
+-- Tiempo de generación: 10-11-2023 a las 16:34:06
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -18,10 +18,11 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `pt04_Marc_Jornet`
+-- Base de datos: `pt05_marc_jornet`
 --
-CREATE DATABASE IF NOT EXISTS `pt04_Marc_Jornet` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `pt04_Marc_Jornet`;
+DROP DATABASE IF EXISTS `pt05_marc_jornet`;
+CREATE DATABASE IF NOT EXISTS `pt05_marc_jornet` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `pt05_marc_jornet`;
 
 -- --------------------------------------------------------
 
@@ -30,13 +31,11 @@ USE `pt04_Marc_Jornet`;
 --
 
 DROP TABLE IF EXISTS `articles`;
-CREATE TABLE IF NOT EXISTS `articles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `articles` (
+  `id` int(11) NOT NULL,
   `article` text NOT NULL,
-  `id_usuaris` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_articles_usuaris` (`id_usuaris`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id_usuaris` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `articles`
@@ -44,7 +43,6 @@ CREATE TABLE IF NOT EXISTS `articles` (
 
 INSERT INTO `articles` (`id`, `article`, `id_usuaris`) VALUES
 (1, 'Descubrimiento de exoplanetas mediante inteligencia artificial.', 1),
-(2, 'Los beneficios de la meditación en la salud mental.', 1),
 (3, 'Cómo la realidad virtual está transformando la educación.', 1),
 (4, 'La importancia de la diversidad en el lugar de trabajo.', 1),
 (5, 'Avances en la edición genética para tratar enfermedades.', 1),
@@ -79,9 +77,10 @@ INSERT INTO `articles` (`id`, `article`, `id_usuaris`) VALUES
 (36, 'Descubrimiento de exoplanetas mediante inteligencia artificial.La exploración de exoplanetas en busca de vida extraterrestre.', 1),
 (52, 'Hola xavi, que tal', 5),
 (55, 'Que tal', 5),
-(56, 'Hola illo', 5),
+(56, 'coche rojo', 5),
 (58, 'Hola benito', 6),
-(59, 'Me llamo Juan', 6);
+(59, 'Me llamo Juan', 6),
+(66, 'Los lagos de mariposas', 8);
 
 -- --------------------------------------------------------
 
@@ -90,26 +89,62 @@ INSERT INTO `articles` (`id`, `article`, `id_usuaris`) VALUES
 --
 
 DROP TABLE IF EXISTS `usuaris`;
-CREATE TABLE IF NOT EXISTS `usuaris` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `usuaris` (
+  `id` int(10) UNSIGNED NOT NULL,
   `nom` text NOT NULL,
   `contrasenya` text NOT NULL,
   `email` text NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `IDX_usuaris_nom` (`nom`) USING HASH,
-  UNIQUE KEY `IDX_usuaris_email` (`email`) USING HASH
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `reset_token` text DEFAULT NULL,
+  `social_provider` enum('Twitter','Google','Facebook','') DEFAULT NULL,
+  `time_token` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  `nom_provisional_oauth` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuaris`
 --
 
-INSERT INTO `usuaris` (`id`, `nom`, `contrasenya`, `email`) VALUES
-(1, 'admin', '$2y$10$4E3.kPZ8MQgZZBAY8jZa3.I6OM5UuUokNpRVDQV6fDXktSt5BtXfa', 'm.jornet@sapalomera.cat'),
-(2, 'Benito04', '$2y$10$tz9la0EdG/TLRtUqaT7R7u6ioEP25nfS3L/qMi/9EwjIs.eiSxTRK', 'fwewfe@fwefwfefwfe.com'),
-(5, 'MarcGuapo', '$2y$10$6dQK67h/xezpmjaeQK3PU.fosJFQFBOKz5KbZ36CjtxR3iZZJF3y6', 'gwegwg@gwegwe.com'),
-(6, 'Rodrigo', '$2y$10$poq2PR1D7qFKIavSjxepLupIc4a.7Q4RBJO/whznQL/DeMstDPb4a', 'vsdvsd@hotmail.com'),
-(7, 'Daweros', '$2y$10$7IeTYHerJJv.m2a.krbUe.FcZlD.iraWZCTAsz2Ar1VWcmmd1feHW', 'daw1234@gmail.com');
+INSERT INTO `usuaris` (`id`, `nom`, `contrasenya`, `email`, `reset_token`, `social_provider`, `time_token`, `nom_provisional_oauth`) VALUES
+(1, 'admin', '$2y$10$G9R4d5ZldoGB1QzgGO1VcOo3zgYUIbsb9qsMOcvsBfnnrsxPmOo42', 'm.jornet@sapalomera.cat', '399bbf4c42ef4a5ddb627421fe30a93f', NULL, '2023-11-10 14:24:26', NULL),
+(2, 'Benito04', '$2y$10$tz9la0EdG/TLRtUqaT7R7u6ioEP25nfS3L/qMi/9EwjIs.eiSxTRK', 'fwewfe@fwefwfefwfe.com', NULL, NULL, NULL, NULL),
+(5, 'MarcGuapo', '$2y$10$6dQK67h/xezpmjaeQK3PU.fosJFQFBOKz5KbZ36CjtxR3iZZJF3y6', 'gwegwg@gwegwe.com', NULL, NULL, NULL, NULL),
+(6, 'Rodrigo', '$2y$10$poq2PR1D7qFKIavSjxepLupIc4a.7Q4RBJO/whznQL/DeMstDPb4a', 'vsdvsd@hotmail.com', NULL, NULL, NULL, NULL),
+(7, 'Daweros', '$2y$10$7IeTYHerJJv.m2a.krbUe.FcZlD.iraWZCTAsz2Ar1VWcmmd1feHW', 'daw1234@gmail.com', NULL, NULL, NULL, NULL),
+(8, '', '', 'marcjornet96@gmail.com', NULL, 'Google', NULL, 'Marc Jornet');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `articles`
+--
+ALTER TABLE `articles`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_articles_usuaris` (`id_usuaris`);
+
+--
+-- Indices de la tabla `usuaris`
+--
+ALTER TABLE `usuaris`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `IDX_usuaris_email` (`email`) USING HASH;
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `articles`
+--
+ALTER TABLE `articles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+
+--
+-- AUTO_INCREMENT de la tabla `usuaris`
+--
+ALTER TABLE `usuaris`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas

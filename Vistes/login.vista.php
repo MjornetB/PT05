@@ -54,17 +54,20 @@
                     echo "</div>";
                 }
                 ?>
+                <!--  Link per recuperar pass -->
                 <br><a href="../Controladors/passRecovery.php">Recupere su contraseña</a>
             </span>
         </form>
     </div>
+    <!--  Link per logejarse amb google -->
     <div class="container">
-        <img src="../Imatges/Google.svg">
+        <img src="../Imatges/Google.svg" style="width: 30px;">
         <?php require_once "../Controladors/googleLogin.php"; ?>
         <a href="<?php echo $authUrl ?>">Inicie sesión con Google</a>
     </div>
+    <!--  Link per logejarse amb github -->
     <div class="container">
-        <img src="../Imatges/twitter.svg">
+        <img src="../Imatges/GithubBlack.svg" style="width: 30px;">
         <a href="../Controladors/githubLogin.php">Inicie sesión con Github</a>
     </div>
 </body>

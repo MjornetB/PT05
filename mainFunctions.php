@@ -1,4 +1,5 @@
 <?php
+// Marc Jornet Boeira
 require "env.php";
 try {
     $conn = new PDO("mysql:host=" . DB_SERVER . ";dbname=" . DB_NAME, DB_USERNAME, DB_PASSWORD); // Connexió a la base de dades
@@ -62,6 +63,13 @@ function realitzarLogin($conn, $emailToLogin, $passwordToLogin){
   }
 }
 
+/**
+ * comprovaExistencia
+ *
+ * @param  mixed $conn conexxio
+ * @param  mixed $emailToRecovery email per comprovar si exsiteix a la base de dades
+ * @retorna un string per a poder fer el tractament depenent de si l'usuari existeix o no. 
+ */
 function comprovaExistencia($conn, $emailToRecovery){
   try {
       $stmt = $conn->prepare("SELECT * FROM usuaris WHERE email = :email");
@@ -110,6 +118,14 @@ function mostrarArticulosUsersBBDD($conn, $articulosPorPagina, $offset, $usuariL
   
   echo '</ul>';
 }
+
+/**
+ * getUserId - Funció que retorna l'id de l'usuari que esta logejat
+ *
+ * @param  mixed $conn
+ * @param  mixed $email per rebre el id de l'usuari que esta logejat
+ * @retorna el id de l'usuari que esta logejat
+ */
 function getUserId($conn, $email){
   $stmtTemp = $conn->prepare("SELECT id FROM usuaris WHERE email = :email");
   $stmtTemp->bindParam(':email', $email);
@@ -120,6 +136,13 @@ function getUserId($conn, $email){
   return $resultat["id"];
 }
 
+/**
+ * introduirToken - Funció que introdueix el token a la base de dades
+ *
+ * @param  mixed $conn
+ * @param  mixed $userId Id de l'usuari per el update
+ * @param  mixed $token token que es genera per a guardar a la base de dades
+ */
 function introduirToken($conn, $userId, $token){
   $stmt = $conn->prepare("UPDATE usuaris SET reset_token = ?, time_token = NOW() WHERE id = ?");
   $stmt->bindParam(1, $token);
@@ -128,6 +151,15 @@ function introduirToken($conn, $userId, $token){
 }
 
 
+/**
+ * changePass2BBDD - Funció que canvia la contrasenya a la base de dades comprovant que el token sigui correcte i que no hagi caducat en 1 hora.
+ *
+ * @param  mixed $conn
+ * @param  mixed $id id de l'usuari per a poder fer el update
+ * @param  mixed $password contrasenya que es vol canviar
+ * @param  mixed $token token per a poder fer l'update si coincideix amb el de la base de dades
+ * @retorna string per a poder saber si s'ha canviat la contrasenya o no
+ */
 function changePass2BBDD($conn, $id, $password, $token){
   try {
     $stmtemp = $conn->prepare("SELECT * FROM usuaris WHERE id = :id");
@@ -237,7 +269,16 @@ function test_input($data) {
     $data = htmlspecialchars($data);
     return $data;
   }
-  //Funció que inserta un usuari autentificat amb Oauth a la base de dades
+  //Funció que inserta un usuari autentificat amb Oauth a la base de dades  
+  /**
+   * insertUserOauth - Funció que inserta un usuari autentificat amb autentificacio social a la base de dades
+   *
+   * @param  mixed $conn
+   * @param  mixed $email de l'usuari a inserir
+   * @param  mixed $name de l'usuari a inserir
+   * @param  mixed $socialMedia de l'usuari a inserir
+   * @return void
+   */
   function insertUserOauth($conn, $email, $name, $socialMedia){
       $stmt = $conn->prepare("INSERT INTO usuaris (nom_provisional_oauth, email, social_provider) VALUES (:nom, :email, :socialMedia)");
       $stmt->bindParam(':nom', $name);

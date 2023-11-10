@@ -20,20 +20,20 @@ $errores = array();
 if (isset($_POST['submit'])) {
     $emailToRecovery = $_POST["email"];
 
-//Aquesta funcio retorna un string per realitzar el login, si no retorna un missatge d'error.
+//Aquesta funcio retorna un string per realitzar el login, si no retorna un missatge d'error. (en aquest cas comprova si l'usuari existeix)
 $checkUserExists = comprovaExistencia($conn, $emailToRecovery);
 
 
 
-//Si el login es correcte, es crea una sessio i es redirigeix a la pagina webLogada.php
+//Si l'usuari existeix es crea un token i s'envia un email amb el token i l'id de l'usuari per despres veure si el token es correcte.
 if ($checkUserExists == "Correcto"){
     $userId = getUserId($conn, $emailToRecovery);
-    $token = bin2hex(openssl_random_pseudo_bytes(16));
+    $token = bin2hex(openssl_random_pseudo_bytes(16)); //Genera un token aleatori de 16 bytes i el converteix a hexadecimal.
     $mail = new PHPMailer(true);
 
 try {
     $emailAEnviar = "";
-    //Server settings
+    //Email settings
     $mail->SMTPDebug = 0;                  
     $mail->isSMTP();                                           
     $mail->Host       = 'smtp.gmail.com';                    
@@ -56,12 +56,13 @@ try {
 } catch (Exception $e) {
     $errores[] = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
+//Si el email s'ha enviat correctament, es crida a la funcio introduirToken per a introduir el token a la base de dades per despres fer la comprovació.
 if ($successMessage){
     introduirToken($conn, $userId, $token);
 }
 
 }
-//Si el login no es correcte, es mostra un missatge d'error i es redirigeix a la pagina index.php als 2 segons
+
 else {
     $errores[] = $checkUserExists;
     //header("Refresh: 2; URL=index.php");

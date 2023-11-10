@@ -1,4 +1,5 @@
 <?php
+//MARC JORNET BOEIRA
 require '../vendor/autoload.php';
 
 use League\OAuth2\Client\Provider\Google;
@@ -9,6 +10,6 @@ $provider = new Google([
     'redirectUri'  => 'http://localhost/BackEnd/Practiques/UF2/Pr%C3%A0ctiques/PT05/Controladors/googleCallback.php', // La URL debe coincidir con la configuración de Google
     
 ]);
-
+// Agafem la URL d'autorització per a utilitzarla a la vista
 $authUrl = $provider->getAuthorizationUrl();
 ?>

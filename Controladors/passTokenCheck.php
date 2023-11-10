@@ -8,6 +8,7 @@ if (isset($_SESSION['user'])) {
     exit; 
 }
 
+//si el token i l'id existeixen, es creen les cookies amb el token i l'id. 
 if (isset($_GET['token']) && isset($_GET['id'])){
     setcookie("token", $_GET['token'], time() + 3600);
     setcookie("id", $_GET['id'], time() + 3600);
@@ -26,7 +27,7 @@ if (isset($_POST['submit'])) {
 $password = $_POST["password"];
 $password2 = $_POST["password2"];
 
-//Comprovem les dades introduides
+//Comprovem les passwords i les comprovem entre elles.
 
 if($password == ""){
     $errores[] = "La contraseña es requerida";
@@ -41,12 +42,13 @@ if ($password != $password2){
 
 //Encriptem la contrasenya
 $password = password_hash($password, PASSWORD_BCRYPT);
+
 //Si no hi ha errors, es crea l'usuari
 if (isset($_POST['submit']) && empty($errores)) {
 $id = $_COOKIE["id"];
 $token = $_COOKIE["token"];
-$errores[] = changePass2BBDD($conn, $id, $password, $token);
-setcookie("token", "", time() - 3600);
+$errores[] = changePass2BBDD($conn, $id, $password, $token); //Aquesta funcio canvia la pass comprovant si el token i l'id coincideixen amb els de la base de dades.
+setcookie("token", "", time() - 3600); //Esborrem les cookies.
 setcookie("id", "", time() - 3600);
 }
 };

@@ -9,6 +9,7 @@ if (isset($_SESSION['user'])) {
     header("Location: webLogada.php");
     exit; 
 }
+//Si l'usuari no ha fet login, es comprova si la cookie d'errors existeix, si no existeix, es crea i es posa a 0.
 if (!isset($_COOKIE["error"])) {
     setcookie("error", 0, time() + 3600);
     $cookie = 0;
@@ -35,13 +36,13 @@ if ($captchaRequired){
     $captcha = $_POST['g-recaptcha-response'];
     $secret = '6LckjvEoAAAAAPI90SKL3U-Qlg59jbbjKhAQR49V';
 
-
+//Comprova si el reCaptcha esta buit, si es així, retorna un missatge d'error.
 if(!$captcha){
 
     $errores[] = "Por favor verifica el captcha";
     
     } else {
-    
+   
     $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$captcha");
     
     $arr = json_decode($response, TRUE);
