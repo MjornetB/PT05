@@ -53,9 +53,11 @@ if (!isset($_SESSION['user'])) {
 			</form>
 
 			<!-- Missatje d'exit o errors -->
-			<?php if (isset($successMessageInsert)) : ?>
-				<div class="success-message"><?php echo $successMessageInsert; ?></div>
-			<?php endif; ?>
+			<?php if (isset($_COOKIE["insert"])) {
+				$contenidoCookie = htmlspecialchars($_COOKIE["insert"], ENT_QUOTES, 'UTF-8');
+				echo "<script>alert('$contenidoCookie');</script>";
+				setcookie("insert", "", time() - 3600);
+			 }?>
 
 			<?php if (!empty($erroresInsert)) : ?>
 				<div class="error-message">
@@ -72,9 +74,11 @@ if (!isset($_SESSION['user'])) {
 				<input type="submit" name="esborraArticle" value="Borrar">
 			</form>
 			<!-- Missatje d'exit o errors -->
-			<?php if (isset($successMessageDelete)) : ?>
-				<div class="success-message"><?php echo $successMessageDelete; ?></div>
-			<?php endif; ?>
+			<?php if (isset($_COOKIE["delete"])) {
+				$contenidoCookieDelete = htmlspecialchars($_COOKIE["delete"], ENT_QUOTES, 'UTF-8');
+				echo "<script>alert('$contenidoCookieDelete');</script>";
+				setcookie("delete", "", time() - 3600);
+			 }?>
 
 			<?php if (!empty($erroresDelete)) : ?>
 				<div class="error-message">
@@ -92,9 +96,11 @@ if (!isset($_SESSION['user'])) {
 				<input type="submit" name="modificaArticle" value="Modificar">
 			</form>
 			<!-- Missatje d'exit o errors -->
-			<?php if (isset($successMessageModify)) : ?>
-				<div class="success-message"><?php echo $successMessageModify; ?></div>
-			<?php endif; ?>
+			<?php if (isset($_COOKIE["modify"])) {
+				$contenidoCookieModify = htmlspecialchars($_COOKIE["modify"], ENT_QUOTES, 'UTF-8');
+				echo "<script>alert('$contenidoCookieModify');</script>";
+				setcookie("modify", "", time() - 3600);
+			 }?>
 
 			<?php if (!empty($erroresModify)) : ?>
 				<div class="error-message">

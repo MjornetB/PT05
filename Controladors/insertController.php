@@ -30,8 +30,12 @@ if ((isset($_POST['enviaArticle']))) {
     $crearArticle = crearArticle($conn, $article);
     if ($crearArticle) {
       $successMessageInsert = "El artículo se ha creado correctamente!";
+      setcookie("insert", $successMessageInsert, time() + 3600);
+      header("Location: webLogada.php");
     } else {
-      $erroresInsert[] = "Error al crear el artículo";
+      $failInsert = "Error al crear el artículo";
+      setcookie("insert", $failInsert, time() + 3600);
+      header("Location: webLogada.php");
     }
   }
   include_once "webLogada.php";

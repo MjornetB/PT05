@@ -36,12 +36,17 @@ if ((isset($_POST['esborraArticle']))){
             $borrarArticle = borrarArticle($conn, $id);
             if ($borrarArticle) {
                 $successMessageDelete = "El artículo se ha borrado correctamente!";
+                setcookie("delete", $successMessageDelete, time() + 3600);
                 header("Location: webLogada.php");
             } else {
-                $erroresDelete[] = "El artículo que desea borrar no existe";
+                $failDelete = "El artículo que desea borrar no existe";
+                setcookie("delete", $failDelete, time() + 3600);
+                header("Location: webLogada.php");
             }
         } else {
-            $erroresDelete[] = "El artículo que intenta borrar o no existe o no es suyo";
+            $failDeleteUser = "El artículo que intenta borrar o no existe o no es suyo";
+            setcookie("delete", $failDeleteUser, time() + 3600);
+            header("Location: webLogada.php");
         }
     }
     include_once "webLogada.php";

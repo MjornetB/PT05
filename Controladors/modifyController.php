@@ -41,11 +41,17 @@ if ((isset($_POST['modificaArticle']))){
             $modificaArticle = modificaArticle($conn, $id, $article);
             if ($modificaArticle) {
                 $successMessageModify = "El artículo se ha modificado correctamente!";
+                setcookie("modify", $successMessageModify, time() + 3600);
+                header("Location: webLogada.php");
             } else {
-                $erroresModify[] = "El artículo que desea modificar no existe";
+                $failModify = "El artículo que desea modificar no existe";
+                setcookie("modify", $failModify, time() + 3600);
+                header("Location: webLogada.php");
             }
         } else {
-            $erroresModify[] = "El artículo que intenta modificar o no existe o no es suyo";
+            $failModifyUser = "El artículo que intenta modificar o no existe o no es suyo";
+            setcookie("modify", $failModifyUser, time() + 3600);
+            header("Location: webLogada.php");
         }
     }
     include_once "webLogada.php";
