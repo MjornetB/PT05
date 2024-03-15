@@ -1,7 +1,7 @@
 Marc Jornet Boeira:
 
-Usuaris login: MarcGuapo, Rodrigo
-password login: @marcguap0
+Usuaris login: m.jornet@sapalomera.cat
+password login: P@ssw0rd
 
 - googleCallback.php les funcions de get email i get name peten al php pero a l'hora de fer la prova van perfectes.
 - Tant a google developers i github developers he posat la url de callback, aquesta ha de coincidir amb les posades als arxius, sinó peta.
